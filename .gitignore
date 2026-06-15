@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native builds (bonus track only; never committed)
+ios/
+android/
+
+# Logs and OS noise
+*.log
+.DS_Store
+
+# Environment files (none are required to run this repo)
+.env
+.env.*

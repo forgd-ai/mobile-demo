@@ -1,0 +1,22 @@
+{
+  "name": "stride-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stride: a three-layer activity tracking stack (legacy API, BFF, Expo app)",
+  "workspaces": [
+    "services/api",
+    "services/bff",
+    "app"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,bff,app -c blue,magenta,green \"npm run dev -w services/api\" \"npm run dev -w services/bff\" \"npm run dev -w app\"",
+    "build": "npm run build --workspaces",
+    "test": "npm run test -w services/bff"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

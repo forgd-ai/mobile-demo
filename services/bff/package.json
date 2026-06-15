@@ -1,0 +1,25 @@
+{
+  "name": "@stride/bff",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend-for-frontend: owns the app-facing contract and every translation from the legacy API",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.23",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.4",
+    "typescript": "~5.9.2",
+    "vitest": "^3.1.4"
+  },
+  "type": "module"
+}

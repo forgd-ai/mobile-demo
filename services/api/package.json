@@ -1,0 +1,22 @@
+{
+  "name": "@stride/api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Synthetic legacy workouts API serving committed JSON fixtures",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "tsc --noEmit",
+    "test": "echo \"no tests in the api workspace; the bff owns the contract tests\" && exit 0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.4",
+    "typescript": "~5.9.2"
+  },
+  "type": "module"
+}
