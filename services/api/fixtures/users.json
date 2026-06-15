@@ -1,0 +1,23 @@
+[
+  {
+    "user_id": 1,
+    "display_name": "Sam Okafor",
+    "home_tz": "America/New_York",
+    "unit_pref": 1,
+    "created_ts": 1735689600
+  },
+  {
+    "user_id": 2,
+    "display_name": "Priya Shah",
+    "home_tz": "Europe/London",
+    "unit_pref": 1,
+    "created_ts": 1738368000
+  },
+  {
+    "user_id": 3,
+    "display_name": "Kenji Mori",
+    "home_tz": "Asia/Tokyo",
+    "unit_pref": 1,
+    "created_ts": 1741046400
+  }
+]
