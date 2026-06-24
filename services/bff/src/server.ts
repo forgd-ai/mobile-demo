@@ -4,7 +4,9 @@
 import cors from 'cors';
 import express from 'express';
 import { fetchUsers, fetchWorkout, fetchWorkouts, UpstreamError } from './apiClient.js';
+import { buildWeeklySummary } from './summary.js';
 import { toActivity, toUser } from './transforms/casing.js';
+import { parseTimeZone } from './transforms/time.js';
 import { parseUnits } from './transforms/units.js';
 
 const app = express();
@@ -59,6 +61,20 @@ app.get('/api/users', async (_req, res) => {
   try {
     const rows = await fetchUsers();
     res.json({ users: rows.map(toUser) });
+  } catch (err) {
+    handleError(res, err);
+  }
+});
+
+// GET /api/summary/weekly?userId=1&units=metric&tz=America/New_York
+app.get('/api/summary/weekly', async (req, res) => {
+  try {
+    const units = parseUnits(req.query.units);
+    const timeZone = parseTimeZone(req.query.tz);
+    const userId = req.query.userId ? Number(req.query.userId) : undefined;
+    const rows = await fetchWorkouts({ userId });
+    const weeks = buildWeeklySummary(rows, units, timeZone);
+    res.json({ weeks, units, timeZone });
   } catch (err) {
     handleError(res, err);
   }
