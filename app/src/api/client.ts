@@ -33,6 +33,19 @@ export function deviceTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'UTC';
 }
 
+export interface WeeklySummary {
+  weekStart: string;
+  weekEnd: string;
+  label: string;
+  workouts: number;
+  totalDistance: number;
+  distanceUnit: string;
+  totalDurationSeconds: number;
+  totalElevationGain: number;
+  elevationUnit: string;
+  byType: Record<string, number>;
+}
+
 export const api = {
   async activities(userId: number, units: Units): Promise<Activity[]> {
     const data = await get<{ activities: Activity[] }>(
@@ -44,5 +57,12 @@ export const api = {
   async activity(id: number, units: Units): Promise<Activity> {
     const data = await get<{ activity: Activity }>(`/api/activities/${id}?units=${units}`);
     return data.activity;
+  },
+
+  async weeklySummary(userId: number, units: Units, timeZone: string): Promise<WeeklySummary[]> {
+    const data = await get<{ weeks: WeeklySummary[] }>(
+      `/api/summary/weekly?userId=${userId}&units=${units}&tz=${encodeURIComponent(timeZone)}`
+    );
+    return data.weeks;
   },
 };

@@ -5,3 +5,8 @@ export type ActivitiesStackParamList = {
   ActivityList: undefined;
   ActivityDetail: { id: number };
 };
+
+export type RootTabParamList = {
+  ActivitiesTab: undefined;
+  SummaryTab: undefined;
+};
