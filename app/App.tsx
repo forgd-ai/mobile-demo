@@ -11,6 +11,7 @@ import PhoneFrame from './src/components/PhoneFrame';
 import { ActivitiesStackParamList, RootTabParamList } from './src/navigation';
 import ActivityDetailScreen from './src/screens/ActivityDetailScreen';
 import ActivityListScreen from './src/screens/ActivityListScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import WeeklySummaryScreen from './src/screens/WeeklySummaryScreen';
 import { SettingsProvider } from './src/state/SettingsContext';
 import { colors } from './src/theme';
@@ -43,6 +44,7 @@ function ActivitiesStack() {
 const TAB_ICONS: Record<keyof RootTabParamList, keyof typeof Ionicons.glyphMap> = {
   ActivitiesTab: 'list',
   SummaryTab: 'stats-chart',
+  SettingsTab: 'settings-outline',
 };
 
 export default function App() {
@@ -71,6 +73,11 @@ export default function App() {
               name="SummaryTab"
               component={WeeklySummaryScreen}
               options={{ title: 'Summary' }}
+            />
+            <Tabs.Screen
+              name="SettingsTab"
+              component={SettingsScreen}
+              options={{ title: 'Settings' }}
             />
           </Tabs.Navigator>
         </NavigationContainer>

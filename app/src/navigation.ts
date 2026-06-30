@@ -9,4 +9,5 @@ export type ActivitiesStackParamList = {
 export type RootTabParamList = {
   ActivitiesTab: undefined;
   SummaryTab: undefined;
+  SettingsTab: undefined;
 };
