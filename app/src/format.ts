@@ -11,7 +11,12 @@ export function formatElevation(value: number, unit: string): string {
 
 export function formatDuration(totalSeconds: number): string {
   const minutes = Math.round(totalSeconds / 60);
-  return `${minutes}m`;
+  if (minutes < 60) {
+    return `${minutes}m`;
+  }
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  return `${hours}h ${String(rest).padStart(2, '0')}m`;
 }
 
 // "7:15 AM" in the device timezone.
