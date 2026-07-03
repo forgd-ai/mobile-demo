@@ -5,8 +5,8 @@ BFF that owns the app contract, and an Expo React Native app.
 
 ## Overview
 
-Stride records workouts (runs, rides, swims, hikes, walks) for review in a
-mobile app. The stack mirrors how enterprise mobile teams ship: the
+Stride records workouts (runs, rides, swims, hikes, walks) and shows a weekly
+training summary. The stack mirrors how enterprise mobile teams ship: the
 backend API is legacy-shaped (snake_case, metric units, epoch timestamps,
 numeric enums), the BFF translates it into the shape the app renders, and the
 app never talks to the backend directly. All data comes from committed

@@ -3,6 +3,19 @@
 All notable changes to Stride are documented here. The format follows
 Keep a Changelog; versions follow semver.
 
+## [1.1.0] - 2026-07-03
+
+### Added
+
+- Weekly summary endpoint on the BFF: Monday-start weeks bucketed in the
+  viewer's timezone, totals for distance, time, and elevation
+- Weekly summary screen behind bottom tab navigation
+- Settings screen with a metric/imperial display units preference
+
+### Fixed
+
+- Durations over an hour now render as hours and minutes instead of raw minutes
+
 ## [1.0.0] - 2026-06-19
 
 ### Added
