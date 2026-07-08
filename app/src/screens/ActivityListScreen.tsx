@@ -12,7 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Activity, DEFAULT_USER_ID, api } from '../api/client';
+import { Activity, api } from '../api/client';
 import ActivityTypeIcon from '../components/ActivityTypeIcon';
 import { capitalize, formatDay, formatDistance, formatDuration, formatTime, localDayKey } from '../format';
 import { useSettings } from '../state/SettingsContext';
@@ -41,7 +41,7 @@ function groupByDay(activities: Activity[]): DaySection[] {
 export default function ActivityListScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<ActivitiesStackParamList, 'ActivityList'>>();
-  const { units } = useSettings();
+  const { units, userId } = useSettings();
   const [sections, setSections] = useState<DaySection[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,12 +49,12 @@ export default function ActivityListScreen() {
     setSections(null);
     setError(null);
     try {
-      const activities = await api.activities(DEFAULT_USER_ID, units);
+      const activities = await api.activities(userId, units);
       setSections(groupByDay(activities));
     } catch (err) {
       setError(String(err));
     }
-  }, [units]);
+  }, [units, userId]);
 
   useEffect(() => {
     load();

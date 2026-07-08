@@ -1,9 +1,9 @@
-// Description: User preferences: display units.
-// Description: Writes to SettingsContext; every data screen refetches from the BFF with the new value.
+// Description: User preferences: display units and the active profile.
+// Description: Writes to SettingsContext; every data screen refetches from the BFF with the new values.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Units } from '../api/client';
+import { Units, User, api } from '../api/client';
 import { useSettings } from '../state/SettingsContext';
 import { colors, spacing } from '../theme';
 
@@ -13,7 +13,18 @@ const UNIT_OPTIONS: { value: Units; label: string; detail: string }[] = [
 ];
 
 export default function SettingsScreen() {
-  const { units, setUnits } = useSettings();
+  const { units, setUnits, userId, setUserId } = useSettings();
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    api
+      .users()
+      .then(setUsers)
+      .catch((err) => {
+        console.error('failed to load profiles:', err);
+        setUsers([]);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -35,8 +46,29 @@ export default function SettingsScreen() {
           </Pressable>
         ))}
       </View>
+
+      <Text style={[styles.sectionTitle, styles.sectionSpacing]}>Profile</Text>
+      <View style={styles.card}>
+        {users.map((user, index) => (
+          <Pressable
+            key={user.id}
+            style={[styles.option, index > 0 && styles.optionBorder]}
+            onPress={() => setUserId(user.id)}
+          >
+            <View>
+              <Text style={styles.optionLabel}>{user.name}</Text>
+              <Text style={styles.optionDetail}>{user.homeTimezone}</Text>
+            </View>
+            <View style={[styles.radio, userId === user.id && styles.radioActive]}>
+              {userId === user.id && <View style={styles.radioDot} />}
+            </View>
+          </Pressable>
+        ))}
+      </View>
+
       <Text style={styles.note}>
-        Distances and elevation everywhere in the app follow this preference.
+        Distances and elevation everywhere in the app follow the units
+        preference. The profile selects whose activities the app shows.
       </Text>
     </View>
   );
@@ -54,6 +86,9 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     textTransform: 'uppercase',
     marginBottom: spacing.sm,
+  },
+  sectionSpacing: {
+    marginTop: spacing.lg,
   },
   card: {
     backgroundColor: colors.card,

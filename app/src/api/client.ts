@@ -33,6 +33,12 @@ export function deviceTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'UTC';
 }
 
+export interface User {
+  id: number;
+  name: string;
+  homeTimezone: string;
+}
+
 export interface WeeklySummary {
   weekStart: string;
   weekEnd: string;
@@ -64,5 +70,10 @@ export const api = {
       `/api/summary/weekly?userId=${userId}&units=${units}&tz=${encodeURIComponent(timeZone)}`
     );
     return data.weeks;
+  },
+
+  async users(): Promise<User[]> {
+    const data = await get<{ users: User[] }>('/api/users');
+    return data.users;
   },
 };

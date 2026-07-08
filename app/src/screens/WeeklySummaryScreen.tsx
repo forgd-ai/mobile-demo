@@ -3,13 +3,13 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { DEFAULT_USER_ID, WeeklySummary, api, deviceTimeZone } from '../api/client';
+import { WeeklySummary, api, deviceTimeZone } from '../api/client';
 import { capitalize, formatDistance, formatDuration, formatElevation } from '../format';
 import { useSettings } from '../state/SettingsContext';
 import { colors, spacing } from '../theme';
 
 export default function WeeklySummaryScreen() {
-  const { units } = useSettings();
+  const { units, userId } = useSettings();
   const [weeks, setWeeks] = useState<WeeklySummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,11 +17,11 @@ export default function WeeklySummaryScreen() {
     setWeeks(null);
     setError(null);
     try {
-      setWeeks(await api.weeklySummary(DEFAULT_USER_ID, units, deviceTimeZone()));
+      setWeeks(await api.weeklySummary(userId, units, deviceTimeZone()));
     } catch (err) {
       setError(String(err));
     }
-  }, [units]);
+  }, [units, userId]);
 
   useEffect(() => {
     load();
