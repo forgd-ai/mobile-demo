@@ -10,4 +10,5 @@ export type RootTabParamList = {
   ActivitiesTab: undefined;
   SummaryTab: undefined;
   SettingsTab: undefined;
+  AboutTab: undefined;
 };

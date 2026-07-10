@@ -9,6 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import PhoneFrame from './src/components/PhoneFrame';
 import { ActivitiesStackParamList, RootTabParamList } from './src/navigation';
+import AboutScreen from './src/screens/AboutScreen';
 import ActivityDetailScreen from './src/screens/ActivityDetailScreen';
 import ActivityListScreen from './src/screens/ActivityListScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -45,6 +46,7 @@ const TAB_ICONS: Record<keyof RootTabParamList, keyof typeof Ionicons.glyphMap> 
   ActivitiesTab: 'list',
   SummaryTab: 'stats-chart',
   SettingsTab: 'settings-outline',
+  AboutTab: 'information-circle-outline',
 };
 
 export default function App() {
@@ -78,6 +80,11 @@ export default function App() {
               name="SettingsTab"
               component={SettingsScreen}
               options={{ title: 'Settings' }}
+            />
+            <Tabs.Screen
+              name="AboutTab"
+              component={AboutScreen}
+              options={{ title: 'About' }}
             />
           </Tabs.Navigator>
         </NavigationContainer>
