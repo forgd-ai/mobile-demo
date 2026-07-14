@@ -42,6 +42,7 @@ npm test         # run the BFF transform unit tests
 - `services/api/` - synthetic legacy workouts API; serves committed JSON fixtures
 - `services/bff/` - the BFF; owns every translation between the API and the app
 - `app/` - Expo React Native app; consumes only the BFF
+- `notes/` - working notes (specs, investigations, rationale)
 
 ## Configuration
 
