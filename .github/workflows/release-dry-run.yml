@@ -1,0 +1,47 @@
+# Description: Walks the mechanical runbook steps in dry-run mode on demand.
+# Description: Repo-local only; every step calls a script that also runs on a laptop.
+
+name: release-dry-run
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: "Version bump level to rehearse"
+        required: true
+        default: "minor"
+        type: choice
+        options: [major, minor, patch]
+
+jobs:
+  rehearse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Gates (runbook step 0)
+        run: |
+          npm run build
+          npm test
+
+      - name: Version bump dry run (runbook step 1)
+        run: ./scripts/release/bump-version.sh "${{ inputs.level }}"
+
+      - name: Tag dry run (runbook step 3)
+        run: ./scripts/release/tag-release.sh
+
+      - name: Rollout status (runbook step 4)
+        run: ./scripts/release/rollout-status.sh
+
+      - name: Store submission dry run (runbook step 5)
+        run: ./scripts/release/submit-store.sh
