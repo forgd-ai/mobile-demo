@@ -37,6 +37,14 @@ describe('weekStartKey', () => {
     expect(weekStartKey(epoch('2026-07-26T23:59:00Z'), 'UTC')).toBe('2026-07-20');
   });
 
+  it('buckets by the local week, so the same instant can land in different weeks', () => {
+    const sundayEveningUtc = epoch('2026-07-26T20:00:00Z');
+    expect(weekStartKey(sundayEveningUtc, 'UTC')).toBe('2026-07-20');
+    // 20:00 UTC Sunday is already 05:00 Monday in Tokyo.
+    expect(weekStartKey(sundayEveningUtc, 'Asia/Tokyo')).toBe('2026-07-27');
+    // And still Sunday afternoon in New York.
+    expect(weekStartKey(sundayEveningUtc, 'America/New_York')).toBe('2026-07-20');
+  });
 });
 
 describe('calendar helpers', () => {
