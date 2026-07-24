@@ -3,6 +3,20 @@
 All notable changes to Stride are documented here. The format follows
 Keep a Changelog; versions follow semver.
 
+## [1.2.0] - 2026-07-24
+
+### Added
+
+- Profile switcher in settings: the app can show any fixture user's activities
+- About screen with the stack description and app version
+- Release runbook (`RUNBOOK.md`), release scripts, and a dry-run rehearsal
+  workflow
+- Per-layer project context files documenting each workspace's conventions
+
+### Changed
+
+- Fixture window refreshed to current weeks
+
 ## [1.1.0] - 2026-07-03
 
 ### Added
