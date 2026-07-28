@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { WeeklySummary, api, deviceTimeZone } from '../api/client';
-import { capitalize, formatDistance, formatDuration, formatElevation } from '../format';
+import SummaryCard from '../components/SummaryCard';
 import { useSettings } from '../state/SettingsContext';
 import { colors, spacing } from '../theme';
 
@@ -53,40 +53,7 @@ export default function WeeklySummaryScreen() {
       contentContainerStyle={styles.listContent}
       data={weeks}
       keyExtractor={(week) => week.weekStart}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{item.label}</Text>
-            <Text style={styles.cardWorkouts}>
-              {item.workouts} workout{item.workouts === 1 ? '' : 's'}
-            </Text>
-          </View>
-          <Text style={styles.headline}>
-            {formatDistance(item.totalDistance, item.distanceUnit)}
-          </Text>
-          <View style={styles.statsRow}>
-            <View style={styles.stat}>
-              <Text style={styles.statLabel}>Time</Text>
-              <Text style={styles.statValue}>{formatDuration(item.totalDurationSeconds)}</Text>
-            </View>
-            <View style={styles.stat}>
-              <Text style={styles.statLabel}>Elevation</Text>
-              <Text style={styles.statValue}>
-                {formatElevation(item.totalElevationGain, item.elevationUnit)}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.typeRow}>
-            {Object.entries(item.byType).map(([type, count]) => (
-              <View key={type} style={styles.typeChip}>
-                <Text style={styles.typeChipText}>
-                  {capitalize(type)} x {count}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      )}
+      renderItem={({ item }) => <SummaryCard week={item} />}
     />
   );
 }
@@ -105,66 +72,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.lg,
     backgroundColor: colors.background,
-  },
-  card: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  cardTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: colors.textMuted,
-  },
-  cardWorkouts: {
-    fontSize: 13,
-    color: colors.textMuted,
-  },
-  headline: {
-    fontSize: 34,
-    fontWeight: '700',
-    color: colors.text,
-    marginVertical: spacing.sm,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    gap: spacing.lg,
-  },
-  stat: {},
-  statLabel: {
-    fontSize: 12,
-    color: colors.textMuted,
-  },
-  statValue: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.text,
-    marginTop: 2,
-  },
-  typeRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-    marginTop: spacing.md,
-  },
-  typeChip: {
-    backgroundColor: colors.accentSoft,
-    borderRadius: 8,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-  },
-  typeChipText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: colors.accent,
   },
   errorText: {
     fontSize: 16,
