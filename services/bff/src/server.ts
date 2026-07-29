@@ -28,14 +28,16 @@ app.get('/health', (_req, res) => {
   res.json({ ok: true });
 });
 
-// GET /api/activities?userId=1&units=metric
+// GET /api/activities?userId=1&units=metric&status=synced
 app.get('/api/activities', async (req, res) => {
   try {
     const units = parseUnits(req.query.units);
     const userId = req.query.userId ? Number(req.query.userId) : undefined;
+    const status = typeof req.query.status === 'string' ? req.query.status : undefined;
     const rows = await fetchWorkouts({ userId });
     const activities = rows
       .map((row) => toActivity(row, units))
+      .filter((activity) => status === undefined || activity.status === status)
       .sort((a, b) => b.startTime.localeCompare(a.startTime));
     res.json({ activities, count: activities.length });
   } catch (err) {
