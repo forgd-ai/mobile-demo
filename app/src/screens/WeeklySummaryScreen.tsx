@@ -25,7 +25,7 @@ export default function WeeklySummaryScreen() {
 
   useEffect(() => {
     load();
-  }, []);
+  }, [load]);
 
   if (error) {
     return (
