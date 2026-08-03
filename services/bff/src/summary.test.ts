@@ -62,4 +62,14 @@ describe('buildWeeklySummary', () => {
   it('returns an empty list for no workouts', () => {
     expect(buildWeeklySummary([], 'metric', 'UTC')).toEqual([]);
   });
+
+  it('treats null elevation rows as zero without dropping the row', () => {
+    const rows = [
+      workout({ workout_id: 1, elevation_gain_m: 40 }),
+      workout({ workout_id: 2, elevation_gain_m: null }),
+    ];
+    const weeks = buildWeeklySummary(rows, 'metric', 'UTC');
+    expect(weeks[0].workouts).toBe(2);
+    expect(weeks[0].totalElevationGain).toBe(40);
+  });
 });
