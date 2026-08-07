@@ -3,6 +3,24 @@
 All notable changes to Stride are documented here. The format follows
 Keep a Changelog; versions follow semver.
 
+## [1.3.0] - 2026-08-07
+
+### Added
+
+- Status filter on the BFF activities endpoint (`?status=`)
+- Cross-layer accuracy repro script (`scripts/repro-accuracy-bug.sh`): checks
+  the weekly summary against totals recomputed from the raw API data
+- Workshop setup checklist
+
+### Changed
+
+- Summary card extracted into its own component
+
+### Fixed
+
+- Weekly summary now refetches after settings changes
+- Weekly elevation totals cover legacy rows with missing elevation (test coverage)
+
 ## [1.2.0] - 2026-07-24
 
 ### Added
