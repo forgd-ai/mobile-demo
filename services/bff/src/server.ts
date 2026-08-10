@@ -76,6 +76,7 @@ app.get('/api/summary/weekly', async (req, res) => {
     const userId = req.query.userId ? Number(req.query.userId) : undefined;
     const rows = await fetchWorkouts({ userId });
     const weeks = buildWeeklySummary(rows, units, timeZone);
+    console.log(`[bff] weekly summary: ${weeks.length} weeks for user ${userId ?? 'all'}`);
     res.json({ weeks, units, timeZone });
   } catch (err) {
     handleError(res, err);
