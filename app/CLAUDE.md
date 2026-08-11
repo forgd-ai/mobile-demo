@@ -27,6 +27,19 @@ renders children directly.
   `src/state/SettingsContext.tsx`. One source of truth; screens read it and
   refetch when it changes.
 
+## Where each screen's data enters
+
+- Activities list: `api.activities(userId, units)` on mount and whenever
+  units or profile change.
+- Activity detail: `api.activity(id, units)` per record.
+- Summary: `api.weeklySummary(userId, units, deviceTimeZone())`; the device
+  timezone decides week bucketing, the BFF does the math.
+- Settings: `api.users()` for the profile list; writes to SettingsContext.
+- About: static, no data.
+
+No screen computes derived numbers. If a screen needs a new number, the BFF
+grows an endpoint or a field; the app does not aggregate.
+
 ## Display rules
 
 - Display formatting happens in one place: `src/format.ts`. Screens call
