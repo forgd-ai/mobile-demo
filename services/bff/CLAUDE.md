@@ -31,6 +31,24 @@ GET /api/summary/weekly?userId=&units=&tz=  weeks newest first, bucketed in tz
 `units` is `metric` (default) or `imperial`. `tz` is an IANA zone; invalid
 zones fall back to UTC.
 
+## Per-endpoint transform pipelines
+
+What each endpoint does to a legacy row, in order:
+
+- `/api/activities`: fetch rows -> unwrap envelope (`apiClient`) ->
+  `toActivity` (casing + enums + time + per-row display units) -> sort
+  newest first. Optional `?status=` filters on the named status.
+- `/api/activities/:id`: fetch one row -> unwrap -> `toActivity`.
+- `/api/users`: fetch rows -> unwrap -> `toUser` (casing only).
+- `/api/summary/weekly`: fetch rows -> unwrap -> `weekStartKey` buckets each
+  row into a Monday-start week in the request's `tz` -> per-week totals sum
+  raw meters/seconds and convert to display units once (`summary.ts`) ->
+  weeks sorted newest first.
+
+Per-row display values round to 1 decimal at the last step. Weekly totals
+never sum already-rounded values; rounding error would accumulate with row
+count.
+
 ## Rules
 
 - Every transform has a unit test (`npm test` runs vitest here). A transform

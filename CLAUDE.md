@@ -39,6 +39,26 @@ The BFF owns the app-facing contract. These rules are load-bearing:
   If a number is wrong on a screen, decide which layer owns the error before
   editing anything.
 
+## The journey of a value (data-flow map)
+
+Every number on a screen crosses three layers. The full trace for distance,
+field by field:
+
+| layer | representation | where |
+|---|---|---|
+| api storage | `distance_m: 8240` (meters, snake_case) | `services/api/fixtures/workouts.json` |
+| api response | same row inside `{ result, count }` envelope | `GET /v1/workouts` |
+| bff unwrap | bare legacy row | `services/bff/src/apiClient.ts` |
+| bff transform | `distance: 8.2, distanceUnit: "km"` (display value, 1 decimal) | `src/transforms/casing.ts` -> `units.ts` |
+| bff aggregation | weekly `totalDistance` from raw meter sums, converted once | `services/bff/src/summary.ts` |
+| app fetch | typed `Activity` / `WeeklySummary` | `app/src/api/client.ts` |
+| app render | `"8.2 km"` string assembly | `app/src/format.ts` -> screens |
+
+The same shape holds for time (epoch -> ISO -> local strings) and enums
+(numeric code -> name -> icon/label). When a value is wrong on screen,
+walk this table from the bottom up and find the first layer where it is
+already wrong; that layer owns the bug.
+
 ## Where to look
 
 - Per-layer conventions: `services/api/CLAUDE.md`, `services/bff/CLAUDE.md`,

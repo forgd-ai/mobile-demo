@@ -43,6 +43,17 @@ GET /v1/users/:id
 GET /v1/activity_types                      the legacy code table
 ```
 
+## Which fields feed which screens
+
+Traced downstream (api field -> what the app ultimately renders):
+
+- `distance_m` -> list row distance, detail Distance, weekly total headline
+- `duration_s` -> list row duration, detail Duration, weekly Time
+- `elevation_gain_m` -> detail Elevation gain, weekly Elevation
+- `start_ts` -> list day grouping and time, detail date line, weekly bucketing
+- `activity_type` -> icon and label everywhere, weekly type chips
+- `status` -> list status pill (non-synced only), detail Status
+
 ## Rules
 
 - Do not modernize this service. Its legacy shape is the point; the BFF owns
