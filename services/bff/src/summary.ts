@@ -8,6 +8,7 @@ import {
   Units,
   distanceUnit,
   elevationUnit,
+  round1,
   toDisplayDistance,
   toDisplayElevation,
 } from './transforms/units.js';
@@ -44,10 +45,12 @@ export function buildWeeklySummary(
   return [...buckets.entries()]
     .sort((a, b) => b[0].localeCompare(a[0]))
     .map(([weekStart, group]) => {
-      // Totals accumulate in raw storage units (meters, seconds) and convert
-      // to display units exactly once. Display rounding must never feed back
-      // into arithmetic.
-      const totalMeters = group.reduce((sum, row) => sum + row.distance_m, 0);
+      // Derive the weekly total from the same per-row display conversion the
+      // activity list uses, so the two screens always agree on what each
+      // workout contributed.
+      const totalDistance = round1(
+        group.reduce((sum, row) => sum + toDisplayDistance(row.distance_m, units), 0)
+      );
       const totalSeconds = group.reduce((sum, row) => sum + row.duration_s, 0);
       const totalElevationMeters = group.reduce(
         (sum, row) => sum + (row.elevation_gain_m ?? 0),
@@ -63,7 +66,7 @@ export function buildWeeklySummary(
         weekEnd: addDays(weekStart, 6),
         label: weekLabel(weekStart),
         workouts: group.length,
-        totalDistance: toDisplayDistance(totalMeters, units),
+        totalDistance,
         distanceUnit: distanceUnit(units),
         totalDurationSeconds: totalSeconds,
         totalElevationGain: toDisplayElevation(totalElevationMeters, units),
