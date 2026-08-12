@@ -75,8 +75,26 @@ high-volume users noticed. The refactor's stated goal (list and summary
 agree per workout) hid a semantics change: display formatting became input
 to arithmetic.
 
-## Next
+## Resolution
 
-Fix: restore raw-meter accumulation with a single final conversion in
-`summary.ts`, revert the context-file rule, and add a regression test with
-distances that expose rounding accumulation (many rows, messy decimals).
+- Fix: `summary.ts` accumulates raw meters again and converts once
+  ("fix(bff): sum raw distances before display conversion in weekly
+  totals"). The context-file rule is restored to the correct convention.
+- Regression test: `summary.test.ts` now totals twelve messy-decimal
+  distances in both unit systems; the buggy implementation fails it by
+  0.4 in each.
+- Guard: `npm run check:accuracy` wraps the repro script, and CI
+  (`.github/workflows/ci.yml`) runs typecheck, unit tests, and the accuracy
+  check on every push and pull request. The class of defect cannot land
+  silently again: green unit tests alone no longer vouch for cross-layer
+  accuracy.
+
+## Postmortem shape
+
+What happened: a refactor made display rounding an input to arithmetic.
+Why it was invisible: correct under the developer's default conditions (few
+workouts, clean test values, per-row screens unaffected); wrong under real
+conditions (high-volume weeks). How it was found: layer-by-layer bisection
+along the data-flow map, then git archaeology on the owning file. What now
+prevents it: the regression test pins the semantics, and the accuracy check
+compares layers end to end in CI.
