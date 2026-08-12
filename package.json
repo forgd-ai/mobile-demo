@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "concurrently -k -n api,bff,app -c blue,magenta,green \"npm run dev -w services/api\" \"npm run dev -w services/bff\" \"npm run dev -w app\"",
     "build": "npm run build --workspaces",
-    "test": "npm run test -w services/bff"
+    "test": "npm run test -w services/bff",
+    "check:accuracy": "./scripts/repro-accuracy-bug.sh"
   },
   "engines": {
     "node": ">=20"
