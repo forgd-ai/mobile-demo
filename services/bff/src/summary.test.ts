@@ -72,4 +72,27 @@ describe('buildWeeklySummary', () => {
     expect(weeks[0].workouts).toBe(2);
     expect(weeks[0].totalElevationGain).toBe(40);
   });
+
+  // Regression test for the weekly distance drift incident: totals must come
+  // from raw meters converted once. Summing per-row display values (rounded
+  // to one decimal) accumulates error; with the distances below the wrong
+  // implementation loses 0.4 km and 0.4 mi. Clean multiples of 100 m cannot
+  // distinguish the two implementations; messy distances can.
+  it('weekly totals are immune to per-row display rounding accumulation', () => {
+    const distances = [13425, 11325, 5543, 36436, 7944, 10025, 3444, 9225, 10533, 8725, 17745, 13425];
+    const rows = distances.map((distance_m, i) =>
+      workout({
+        workout_id: i + 1,
+        distance_m,
+        start_ts: Date.parse('2026-07-14T09:00:00Z') / 1000 + i * 3600,
+      })
+    );
+    const weeks = buildWeeklySummary(rows, 'metric', 'UTC');
+    // 147795 m exactly; per-row rounding would report 147.4
+    expect(weeks[0].totalDistance).toBe(147.8);
+
+    const imperial = buildWeeklySummary(rows, 'imperial', 'UTC');
+    // 91.835 mi exactly; per-row rounding would report 91.4
+    expect(imperial[0].totalDistance).toBe(91.8);
+  });
 });
