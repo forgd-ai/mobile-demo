@@ -6,9 +6,10 @@ in the release thread before the step runs. Everything else is mechanical and
 a candidate for automation.
 
 Scripts referenced below live in `scripts/release/` and run locally. Every
-script supports `--dry-run` (the default in this repo) so the whole runbook
-can be rehearsed without side effects. `.github/workflows/release-dry-run.yml`
-walks the mechanical steps the same way.
+script is dry-run by default and only acts when passed `--apply`, so the
+whole runbook can be rehearsed without side effects.
+`.github/workflows/release-dry-run.yml` walks the mechanical steps the same
+way.
 
 ## 0. Preflight
 
