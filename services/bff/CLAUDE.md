@@ -14,9 +14,8 @@ translated here, and nowhere else.
 | enums | numeric codes | named values (`run`, `synced`, ...) | `src/transforms/enums.ts` |
 | aggregation | raw rows | weekly totals per Monday-start week | `src/summary.ts` |
 
-Conversion constants: 1 mile = 1609.344 m, 1 m = 3.28084 ft. The list and
-the weekly summary derive per-workout display values from the same helper
-(`toDisplayDistance`), so the two screens always agree.
+Conversion constants: 1 mile = 1609.344 m, 1 m = 3.28084 ft. Weekly totals
+accumulate in raw storage units and convert to display units exactly once.
 
 ## Endpoints
 
