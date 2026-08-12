@@ -41,5 +41,6 @@ const a = JSON.parse(fs.readFileSync('app/app.json', 'utf8'));
 a.expo.version = '$NEXT';
 fs.writeFileSync('app/app.json', JSON.stringify(a, null, 2) + '\n');
 "
-  echo "applied: all workspaces now at $NEXT"
+  npm install --package-lock-only --silent
+  echo "applied: all workspaces now at $NEXT (package-lock.json regenerated)"
 fi
