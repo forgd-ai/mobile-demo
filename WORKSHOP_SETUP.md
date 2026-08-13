@@ -45,6 +45,10 @@ together; the terminal prints the web URL (http://localhost:8081). Open it
 in a browser: you should see the Stride activity feed rendering inside a
 phone-sized frame, with real workout data.
 
+`npm run dev` keeps running until you stop it, so this terminal belongs to
+the servers while the app is up; open a second terminal for anything else,
+including the workshop itself.
+
 ## 5. Click through the two screens the labs depend on
 
 - Open the **Summary** tab and confirm weekly cards render with a distance
