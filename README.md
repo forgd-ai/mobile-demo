@@ -5,7 +5,9 @@ BFF that owns the app contract, and an Expo React Native app.
 
 This is a staged workshop repo for hands-on Claude Code labs. The data is
 committed fixtures (no accounts, no .env), and some branches intentionally
-carry defects the labs investigate. Start with WORKSHOP_SETUP.md.
+carry defects the labs investigate. Dependencies are intentionally pinned
+to the lab baseline, so `npm audit` reports known advisories by design;
+everything runs locally. Start with WORKSHOP_SETUP.md.
 
 ## Overview
 
