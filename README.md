@@ -3,6 +3,10 @@
 Activity tracking across a three-layer mobile stack: a legacy backend API, a
 BFF that owns the app contract, and an Expo React Native app.
 
+This is a staged workshop repo for hands-on Claude Code labs. The data is
+committed fixtures (no accounts, no .env), and some branches intentionally
+carry defects the labs investigate. Start with WORKSHOP_SETUP.md.
+
 ## Overview
 
 Stride records workouts (runs, rides, swims, hikes, walks) and shows a weekly
