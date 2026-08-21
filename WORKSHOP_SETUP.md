@@ -49,6 +49,25 @@ phone-sized frame, with real workout data.
 the servers while the app is up; open a second terminal for anything else,
 including the workshop itself.
 
+### Pick your run target: browser or iOS simulator
+
+The browser is the path everyone can run and the one the labs support end
+to end. If you are on a Mac with Xcode installed, you can run the whole
+lab on the iOS simulator instead. Leave `npm run dev` running and, in your
+second terminal:
+
+```bash
+open -a Simulator
+xcrun simctl openurl booted "exp://localhost:8081"
+```
+
+Click Open when the simulator asks. If Metro printed a port other than
+8081, use that one. Expo Go has to be on the simulator once; if it is
+missing, `npx expo start --ios` from `app/` installs it for you.
+Everything else in this checklist and in the labs reads identically on the
+simulator. If anything here costs you more than five minutes, go back to
+the browser; you lose nothing, and section 6 below covers real phones.
+
 ## 5. Click through the two screens the labs depend on
 
 - Open the **Summary** tab and confirm weekly cards render with a distance
