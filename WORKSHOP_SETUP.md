@@ -26,7 +26,11 @@ Any Node from 20 up works; the repo is tested on 20 LTS and newer.
 
 ## 3. Clone the workshop repo
 
-Your facilitator sends the clone URL before the session:
+Your facilitator sends the clone URL before the session. Clone to a folder
+outside Documents, Desktop, or any cloud-synced directory (iCloud,
+OneDrive, Dropbox); your home folder or a `~/code` directory is ideal. A
+sync daemon and Metro's file watcher feed each other forever, and the
+failure looks like a dev server that starts but never finishes loading.
 
 ```bash
 git clone <workshop-repo-url>
