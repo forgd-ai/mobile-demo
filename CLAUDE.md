@@ -46,13 +46,13 @@ field by field:
 
 | layer | representation | where |
 |---|---|---|
-| api storage | `distance_m: 8240` (meters, snake_case) | `services/api/fixtures/workouts.json` |
+| api storage | `distance_m: 27277` (meters, snake_case) | `services/api/fixtures/workouts.json` |
 | api response | same row inside `{ result, count }` envelope | `GET /v1/workouts` |
 | bff unwrap | bare legacy row | `services/bff/src/apiClient.ts` |
-| bff transform | `distance: 8.2, distanceUnit: "km"` (display value, 1 decimal) | `src/transforms/casing.ts` -> `units.ts` |
+| bff transform | `distance: 27.3, distanceUnit: "km"` (display value, 1 decimal) | `src/transforms/casing.ts` -> `units.ts` |
 | bff aggregation | weekly `totalDistance` from raw meter sums, converted once | `services/bff/src/summary.ts` |
 | app fetch | typed `Activity` / `WeeklySummary` | `app/src/api/client.ts` |
-| app render | `"8.2 km"` string assembly | `app/src/format.ts` -> screens |
+| app render | `"27.3 km"` string assembly | `app/src/format.ts` -> screens |
 
 The same shape holds for time (epoch -> ISO -> local strings) and enums
 (numeric code -> name -> icon/label). When a value is wrong on screen,
