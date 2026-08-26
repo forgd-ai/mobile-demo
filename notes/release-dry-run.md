@@ -45,7 +45,7 @@ dry run only: this repo has no store account on purpose
   tagged; in a real release the bump (step 1, `--apply`) runs first, so the
   rehearsal order matches the runbook order.
 - Release notes drafting (step 2) is deliberately absent from the scripts:
-  `/release-notes` produces the draft and a human signs it off before it
+  `/draft-release-notes` produces the draft and a human signs it off before it
   touches `CHANGELOG.md`. The automation boundary from
   `notes/runbook-classification.md` holds in practice.
 - Nothing in the rehearsal needed credentials, network access, or cleanup;
