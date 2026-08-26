@@ -18,7 +18,7 @@ reputation, or needs judgment about quality rather than correctness.
 | 4 (reporting half) | reading rollout stage and health is a query, not a decision |
 | 6 (detection half) | noticing a crash-rate regression is monitoring, not judgment |
 
-`/release-notes` (built in this lab) automates the drafting half of step 2.
+`/draft-release-notes` (built in this lab) automates the drafting half of step 2.
 
 ## Keep the approval gate
 

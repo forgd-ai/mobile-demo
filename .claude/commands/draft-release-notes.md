@@ -1,7 +1,7 @@
 ---
 description: Draft release notes from the git history between the last two tags
 argument-hint: [from-tag] [to-tag]
-allowed-tools: Bash(git tag:*), Bash(git log:*), Bash(git describe:*), Bash(git show:*)
+allowed-tools: Bash(git for-each-ref:*), Bash(git log:*), Bash(git describe:*), Bash(git show:*), Read, Write(notes/**)
 ---
 
 # Draft release notes
@@ -13,8 +13,8 @@ Draft release notes for this repository from real git history. Runbook step
 
 - If `$ARGUMENTS` provides two tags, use `<from-tag>..<to-tag>`.
 - If it provides one tag, use `<tag>..HEAD`.
-- Otherwise use the last two version tags: `git tag --sort=-v:refname` and
-  take the two newest `v*` tags; the range is `<previous>..<latest>`.
+- Otherwise use the last two version tags: `git for-each-ref --format='%(refname:short)' --sort=-v:refname 'refs/tags/v*'`
+  and take the two newest; the range is `<previous>..<latest>`.
 
 State the resolved range and both tag dates at the top of the draft.
 
