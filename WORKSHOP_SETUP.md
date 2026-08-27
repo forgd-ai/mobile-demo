@@ -53,6 +53,16 @@ phone-sized frame, with real workout data.
 the servers while the app is up; open a second terminal for anything else,
 including the workshop itself.
 
+Two warnings you will see and should leave alone. `npm install` reports
+vulnerabilities and suggests `npm audit fix --force` - do NOT run it: the
+audit noise is expected in this workshop repo, and `--force` upgrades Expo
+across major versions, which breaks the app with an unrelated-looking red
+screen. (Already ran it? Recover with
+`git checkout -- package.json package-lock.json app/package.json`,
+then `rm -rf node_modules && npm install`.) And expo prints a
+version-compatibility warning at startup ("expected version ...") - also
+expected, also not a to-do.
+
 ### Pick your run target: browser or iOS simulator
 
 The browser is the path everyone can run and the one the labs support end
@@ -61,13 +71,23 @@ lab on the iOS simulator instead. Leave `npm run dev` running and, in your
 second terminal:
 
 ```bash
+xcrun simctl boot "iPhone 17 Pro"
 open -a Simulator
 xcrun simctl openurl booted "exp://localhost:8081"
 ```
 
+("Unable to boot device in current state: Booted" just means a simulator
+was already running - not an error. If you use simulators for your day
+job, check `xcrun simctl list devices | grep Booted` first: `booted`
+targets whichever device is up, and a work simulator without Expo Go
+fails the open with error 115.)
+
 Click Open when the simulator asks. If Metro printed a port other than
 8081, use that one. Expo Go has to be on the simulator once; if it is
-missing, `npx expo start --ios` from `app/` installs it for you.
+missing, run `npx expo start --ios` FROM `app/` - not the repo root (a
+root run crashes with "Unable to resolve ../../App") - let it install
+Expo Go and open the app, then Ctrl-C it and re-run the `openurl` line
+above so the lab's own server does the serving.
 Everything else in this checklist and in the labs reads identically on the
 simulator. If anything here costs you more than five minutes, go back to
 the browser; you lose nothing, and section 6 below covers real phones.
